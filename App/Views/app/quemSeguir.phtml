@@ -1,3 +1,8 @@
+<style>
+	.card-body {
+		padding: 10px;
+	}
+</style>
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
@@ -108,34 +113,36 @@
 			<?php } ?>
 		</div>
 
-		<div class="card">
+		<div class="col-md-3">
+			<div class="card">
 				<h4 style="font-size: 15px; color: #1DA1F2; font-weight: bold;" class="card-header">Sugestões:</h4>
 					<div class="card-body">
-						<?php foreach($this->view->sugestoes as $indice_arr => $sugestao) { ?>
-							<?php
-							if($sugestao['seguindo_sn'] == 0) { ?>
-								<div class="row mb-2">
-								<div class="col">
-									<div class="card">
-										<div class="card-body">
-											<div class="row">
-												<div class="col-md-9">
-													<?php echo $sugestao['nome'] ?>
-												</div>
-												<div class="col-md-3 d-flex justify-content-end">
-												<div>
-													<a href="/acao?acao=seguir&id_usuario=<?php echo $sugestao['id']?>" class="btn btn-success" style="font-size: 10px;">Seguir</a>
-												</div>
+					<?php foreach($this->view->sugestoes as $indice_arr => $sugestao) { ?>
+						<?php
+						if($sugestao['seguindo_sn'] == 0) { ?>
+							<div class="row mb-2">
+							<div class="col">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-9">
+												<?php echo $sugestao['nome'] ?>
 											</div>
+											<div class="col-md-3 d-flex justify-content-end">
+											<div>
+												<a href="/acao?acao=seguir&id_usuario=<?php echo $sugestao['id']?>" class="btn btn-success" style="font-size: 10px;">Seguir</a>
 											</div>
+										</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<?php } ?>
-							
+						</div>
 						<?php } ?>
-					</div>
+			
+					<?php } ?>
+				</div>
 			</div>
+		</div>
 	</div>
 </div>
