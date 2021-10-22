@@ -1,3 +1,9 @@
+<style>
+	.card-body {
+		padding: 10px;
+	}
+</style>
+
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
@@ -54,28 +60,38 @@
 			</div>
 
 			
-			<h4 style="font-size: 15px; color: #1DA1F2; font-weight: bold;">Seguidores:</h4>
-				<?php foreach($this->view->seguidores as $indice_arr => $seguidor) { ?>
-					<div class="row mb-2">
-						<div class="col">
-							<div class="card">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-9">
-											<?php echo $seguidor['nome'] ?>
-										</div>
-				
-										<div class="col-md-3 d-flex justify-content-end">
-											<div>
-											<a href="/acao?acao=seguir&id_usuario=<?php echo $seguidor['id']?>" class="btn btn-success">Seguir</a>
+			<div class="card">
+				<h4 style="font-size: 15px; color: #1DA1F2; font-weight: bold;" class="card-header">Seguidores:</h4>
+					<div class="card-body">
+						<?php foreach($this->view->seguidores as $indice_arr => $seguidor) { ?>
+							<div class="row mb-2">
+								<div class="col">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col-md-9">
+													<?php echo $seguidor['nome'] ?>
+												</div>
+												<div class="col-md-3 d-flex justify-content-end">
+												<div>
+													<?php
+													if($seguidor['seguindo_sn'] == 0) { ?>
+														<a href="/acao?acao=seguir&id_usuario=<?php echo $seguidor['id_usuario']?>&pag=timeline" class="btn btn-success" style="font-size: 10px;">Seguir</a>
+													<?php } ?>
+													<?php
+													if($seguidor['seguindo_sn'] > 0) { ?>
+														<a href="/acao?acao=deixar_de_seguir&id_usuario=<?php echo $seguidor['id_usuario']?>&pag=timeline" class="btn btn-danger" style="font-size: 10px;">Deixar de seguir</a>
+													<?php } ?>
+												</div>
+											</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						<?php } ?>
 					</div>
-				<?php } ?>
+			</div>
 			
 
 		</div>

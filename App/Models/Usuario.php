@@ -107,7 +107,14 @@ class Usuario extends Model {
 	public function getSeguidores() {
 		$query = "
 			select 
-				us.id, us.id_usuario, u.nome
+				us.id, us.id_usuario, u.nome, (
+					select 
+						count(*)
+					from
+						usuarios_seguidores as us
+					where
+						us.id_usuario = :id_usuario and us.id_usuario_seguindo = u.id
+				) as seguindo_sn
 			from 
 				usuarios_seguidores as us
 				left join usuarios as u on (us.id_usuario = u.id)
@@ -116,7 +123,31 @@ class Usuario extends Model {
 		";
 
 		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+		$stmt->bindValue(':id_usuario', $this->__get('id'));
+		$stmt->execute();
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function getSugestoes() {
+		$query = "
+			select 
+				u.id, u.nome, (
+					select 
+						count(*)
+					from
+						usuarios_seguidores as us
+					where
+						us.id_usuario = :id_usuario and us.id_usuario_seguindo = u.id
+				) as seguindo_sn
+			from 
+				usuarios as u
+			where  
+				u.id != :id_usuario
+		";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->__get('id'));
 		$stmt->execute();
 
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -129,7 +160,12 @@ class Usuario extends Model {
 		$stmt->bindValue(':id_usuario_seguindo', $id_usuario_seguindo);
 		$stmt->execute();
 
-		header('location: /quem_seguir');
+		if(isset($_GET['pag']) && $_GET['pag'] == 'timeline' ) {
+			header('location: /timeline');
+		} else {
+			header('location: /quem_seguir');
+		}
+		
 	}
 
 	public function deixarSeguirUsuario($id_usuario_seguindo) {
@@ -139,7 +175,11 @@ class Usuario extends Model {
 		$stmt->bindValue(':id_usuario_seguindo', $id_usuario_seguindo);
 		$stmt->execute();
 
-		header('location: /quem_seguir');
+		if(isset($_GET['pag']) && $_GET['pag'] == 'timeline' ) {
+			header('location: /timeline');
+		} else {
+			header('location: /quem_seguir');
+		}
 	}
 
 	//informações do usuário

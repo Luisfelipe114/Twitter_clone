@@ -36,7 +36,7 @@ class AppController extends Action {
 		//recuperando seguidores
 		$seguidores = Container::getModel('usuario');
 
-		$seguidores->__set('id_usuario', $_SESSION['id']);
+		$seguidores->__set('id', $_SESSION['id']);
 
 		$this->view->seguidores = $seguidores->getSeguidores();
 
@@ -99,7 +99,9 @@ class AppController extends Action {
 		$this->view->total_seguindo = $usuario->getTotalSeguindo();
 		$this->view->total_seguidores = $usuario->getTotalSeguidores();
 
-
+		$sugestoes = Container::getModel('usuario');
+		$sugestoes->__set('id', $_SESSION['id']);
+		$this->view->sugestoes = $sugestoes->getSugestoes();
 
 		$this->render('quemSeguir');
 	}	
