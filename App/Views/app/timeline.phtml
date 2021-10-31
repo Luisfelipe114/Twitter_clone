@@ -128,7 +128,27 @@
 						<?php } ?>
 					</div>
 				</div>
-		<?php } ?>
+			<?php } ?>
+
+			<div class="row mt-5 justify-content-center align-itens-center">
+				<nav aria-label="...">
+					<ul class="pagination">
+						<li class="page-item">
+						<a class="page-link" href="/timeline?pagina=1" tabindex="-1">Primeira</a>
+						</li>
+						<?php 
+							for($i = 1; $i <= $this->view->total_de_paginas; $i++) { ?>
+								<li class="page-item <?php echo $this->view->pagina_ativa== $i ? 'active' : ''  ?>"><a class="page-link" href="/timeline?pagina=<?php echo $i?>"><?php echo $i ?></a></li>
+								<li class="page-item active">
+						<?php } ?>
+						
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="/timeline?pagina=<?php echo $this->view->total_de_paginas?>">Última</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
 
 
 		</div>
