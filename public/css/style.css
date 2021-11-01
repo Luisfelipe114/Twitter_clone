@@ -178,7 +178,6 @@ h2 {
 .tweet {
     padding:15px;
     border-bottom: 1px solid #e6ecf0;
-    cursor: pointer;
 }
 
 .tweet:hover {

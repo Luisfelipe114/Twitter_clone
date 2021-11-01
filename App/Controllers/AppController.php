@@ -18,7 +18,7 @@ class AppController extends Action {
 		$tweet->__set('id_usuario', $_SESSION['id']);
 
 		//variáveis de paginação
-		$registros_por_pag = 4;
+		$registros_por_pag = 3;
 		
 		$pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 
@@ -44,14 +44,77 @@ class AppController extends Action {
 		$this->view->total_seguidores = $usuario->getTotalSeguidores();
 
 		//recuperando seguidores
-		$seguidores = Container::getModel('usuario');
-
-		$seguidores->__set('id', $_SESSION['id']);
-
-		$this->view->seguidores = $seguidores->getSeguidores();
+		$limit_seguidores = 3;
+		
+		$this->view->seguidores = $usuario->getSeguidores($limit_seguidores);
+		$this->view->limite_seguidores = $limit_seguidores;
 
 		$this->render('timeline');
 		
+	}
+
+	public function timelineSeguidores() {
+		$this->validaAutenticacao();
+		//recuperação de dados
+		$usuario = Container::getModel('usuario');
+
+		$usuario->__set('id', $_SESSION['id']);
+
+		$this->view->info_usuario = $usuario->getInfoUsuario();
+		$this->view->total_tweets = $usuario->getTotalTweets();
+		$this->view->total_seguindo = $usuario->getTotalSeguindo();
+		$this->view->total_seguidores = $usuario->getTotalSeguidores();
+
+		
+		//variáveis de paginação
+		$pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+		$limit_caixa = 3;
+		$limit_seguidores = 7;
+		$offset = ($pagina - 1) * $limit_seguidores;
+		$total_seguidores = $usuario->getTotalSeguidores();
+		$total_paginas = ceil($total_seguidores['total_seguidores']/$limit_seguidores);
+		$this->view->total_de_paginas = $total_paginas;
+		$this->view->pagina_ativa = $pagina;
+
+		//seguidores da caixinha
+		$this->view->seguidores = $usuario->getSeguidores($limit_caixa);
+
+		//seguidores da paginação
+		$this->view->seguidoresPaginar = $usuario->getSeguidoresPaginar($limit_seguidores, $offset);
+
+
+		$this->render('timelineSeguidores');
+
+	}
+
+	public function timelineSeguindo() {
+		$this->validaAutenticacao();
+		//recuperação de dados
+		$usuario = Container::getModel('usuario');
+
+		$usuario->__set('id', $_SESSION['id']);
+
+		$this->view->info_usuario = $usuario->getInfoUsuario();
+		$this->view->total_tweets = $usuario->getTotalTweets();
+		$this->view->total_seguindo = $usuario->getTotalSeguindo();
+		$this->view->total_seguidores = $usuario->getTotalSeguidores();
+
+		
+		//variáveis de paginação
+		$pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+		$limit_seguindo = 7;
+		$offset = ($pagina - 1) * $limit_seguindo;
+		$total_seguindo = $usuario->getTotalSeguindo();
+		$total_paginas = ceil($total_seguindo['total_seguindo']/$limit_seguindo);
+		$this->view->total_de_paginas = $total_paginas;
+		$this->view->pagina_ativa = $pagina;
+
+		//seguidores da paginação
+		$this->view->seguidoresPaginar = $usuario->getSeguindoPaginar($limit_seguindo, $offset);
+
+
+		$this->render('timelineSeguindo');
+
 	}
 
 	public function tweet() {
@@ -128,6 +191,10 @@ class AppController extends Action {
 		} else {
 			$usuario->deixarSeguirUsuario($id_usuario_seguindo);
 		}
+
+		$pag = $_GET['pag'];
+
+		header('location: /'.$pag);
 	}
 
 	public function removerTweet(){

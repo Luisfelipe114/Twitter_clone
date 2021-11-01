@@ -104,7 +104,7 @@ class Usuario extends Model {
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
-	public function getSeguidores() {
+	public function getSeguidores($limit) {
 		$query = "
 			select 
 				us.id, us.id_usuario, u.nome, (
@@ -120,6 +120,66 @@ class Usuario extends Model {
 				left join usuarios as u on (us.id_usuario = u.id)
 			where 
 				us.id_usuario_seguindo = :id_usuario
+			limit
+				$limit
+		";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->__get('id'));
+		$stmt->execute();
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function getSeguidoresPaginar($limit, $offset) {
+		$query = "
+			select 
+				us.id, us.id_usuario, u.nome, (
+					select 
+						count(*)
+					from
+						usuarios_seguidores as us
+					where
+						us.id_usuario = :id_usuario and us.id_usuario_seguindo = u.id
+				) as seguindo_sn
+			from 
+				usuarios_seguidores as us
+				left join usuarios as u on (us.id_usuario = u.id)
+			where 
+				us.id_usuario_seguindo = :id_usuario
+			limit
+				$limit
+			offset 
+				$offset
+		";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->__get('id'));
+		$stmt->execute();
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function getSeguindoPaginar($limit, $offset) {
+		$query = "
+			select 
+				us.id, us.id_usuario, u.nome, (
+					select 
+						count(*)
+					from
+						usuarios_seguidores as us
+					where
+						us.id_usuario = :id_usuario and us.id_usuario_seguindo = u.id
+				) as seguindo_sn
+			from 
+				usuarios_seguidores as us
+				left join usuarios as u on (us.id_usuario = u.id)
+			where 
+				us.id_usuario_seguindo = :id_usuario
+			limit
+				$limit
+			offset 
+				$offset
 		";
 
 		$stmt = $this->db->prepare($query);

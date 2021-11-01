@@ -1,6 +1,10 @@
+
 <style>
 	.card-body {
 		padding: 10px;
+	}
+	a:hover {
+		text-decoration: none;
 	}
 </style>
 <nav class="navbar navbar-expand-lg menu">
@@ -39,18 +43,24 @@
 					<div class="row mb-2">
 
 						<div class="col">
-							<span class="perfilPainelItem">Tweets</span><br />
-							<span class="perfilPainelItemValor"><?php echo $this->view->total_tweets['total_tweet'] ?></span>
+							<a href="/timeline">
+								<span class="perfilPainelItem">Tweets</span><br />
+								<span class="perfilPainelItemValor"><?php echo $this->view->total_tweets['total_tweet'] ?></span>
+							</a>
 						</div>
 
 						<div class="col">
-							<span class="perfilPainelItem">Seguindo</span><br />
-							<span class="perfilPainelItemValor"><?php echo $this->view->total_seguindo['total_seguindo'] ?></span>
+							<a href="/timelineSeguindo">
+								<span class="perfilPainelItem">Seguindo</span><br />
+								<span class="perfilPainelItemValor"><?php echo $this->view->total_seguindo['total_seguindo'] ?></span>
+							</a>
 						</div>
 
 						<div class="col">
-							<span class="perfilPainelItem">Seguidores</span><br />
-							<span class="perfilPainelItemValor"><?php echo $this->view->total_seguidores['total_seguidores'] ?></span>
+							<a href="/timelineSeguidores">
+								<span class="perfilPainelItem">Seguidores</span><br />
+								<span class="perfilPainelItemValor"><?php echo $this->view->total_seguidores['total_seguidores'] ?></span>
+							</a>
 						</div>
 
 					</div>
@@ -93,13 +103,13 @@
 										<div>
 											<?php
 											if($usuario['seguindo_sn'] == 0) { ?> 
-												<a href="/acao?acao=seguir&id_usuario=<?php echo $usuario['id']?>" class="btn btn-success">Seguir</a>
+												<a href="/acao?acao=seguir&id_usuario=<?php echo $usuario['id']?>&pag=quem_seguir" class="btn btn-info">Seguir</a>
 						
 											<?php } ?>
 
 											<?php
 											if($usuario['seguindo_sn'] > 0) { ?> 
-												<a href="/acao?acao=deixar_de_seguir&id_usuario=<?php echo $usuario['id']?>" class="btn btn-danger">Deixar de seguir</a>
+												<a href="/acao?acao=deixar_de_seguir&id_usuario=<?php echo $usuario['id']?>&pag=quem_seguir" class="btn btn-secondary">Deixar de seguir</a>
 						
 											<?php } ?>
 											
@@ -130,7 +140,7 @@
 											</div>
 											<div class="col-md-3 d-flex justify-content-end">
 											<div>
-												<a href="/acao?acao=seguir&id_usuario=<?php echo $sugestao['id']?>" class="btn btn-success" style="font-size: 10px;">Seguir</a>
+												<a href="/acao?acao=seguir&id_usuario=<?php echo $sugestao['id']?>&pag=quem_seguir" class="btn btn-info" style="font-size: 10px;">Seguir</a>
 											</div>
 										</div>
 										</div>

@@ -38,6 +38,18 @@ class Route extends Bootstrap {
 			'action' => 'timeline'
 		);
 
+		$routes['timelineSeguidores'] = array(
+			'route' => '/timelineSeguidores',
+			'controller' => 'AppController',
+			'action' => 'timelineSeguidores'
+		);
+
+		$routes['timelineSeguindo'] = array(
+			'route' => '/timelineSeguindo',
+			'controller' => 'AppController',
+			'action' => 'timelineSeguindo'
+		);
+
 		$routes['sair'] = array(
 			'route' => '/sair',
 			'controller' => 'AuthController',
