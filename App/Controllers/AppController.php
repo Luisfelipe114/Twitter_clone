@@ -109,9 +109,8 @@ class AppController extends Action {
 		$this->view->total_de_paginas = $total_paginas;
 		$this->view->pagina_ativa = $pagina;
 
-		//seguidores da paginação
-		$this->view->seguidoresPaginar = $usuario->getSeguindoPaginar($limit_seguindo, $offset);
-
+		//paginação do seguindo
+		$this->view->seguindoPaginar = $usuario->getSeguindoPaginar($limit_seguindo, $offset);
 
 		$this->render('timelineSeguindo');
 

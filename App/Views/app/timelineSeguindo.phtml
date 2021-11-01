@@ -80,21 +80,21 @@
 			<div class="card">
 				<h4 class="card-header" id="seguidoresPagina">Seguindo</h4>
 				<div class="card-body">
-				<?php foreach($this->view->seguidoresPaginar as $indice_arr => $seguidor) { ?>
-                        <?php if($seguidor['seguindo_sn'] > 0) { ?> 
+				<?php foreach($this->view->seguindoPaginar as $indice_arr => $seguindo) { ?>
+                        <?php if($seguindo['seguindo_sn'] > 0) { ?> 
                             <div class="row mb-2">
 								<div class="col">
 									<div class="card">
 										<div class="card-body">
 											<div class="row">
 												<div class="col-md-9">
-													<?php echo $seguidor['nome'] ?>
+													<?php echo $seguindo['nome'] ?>
 												</div>
 												<div class="col-md-3 d-flex justify-content-end">
 												<div>
 													<?php
-													if($seguidor['seguindo_sn'] > 0) { ?>
-														<a href="/acao?acao=deixar_de_seguir&id_usuario=<?php echo $seguidor['id_usuario']?>&pag=timelineSeguindo" class="btn btn-secondary" style="font-size: 10px;">Deixar de seguir</a>
+													if($seguindo['seguindo_sn'] > 0) { ?>
+														<a href="/acao?acao=deixar_de_seguir&id_usuario=<?php echo $seguindo['id_usuario']?>&pag=timelineSeguindo" class="btn btn-secondary" style="font-size: 10px;">Deixar de seguir</a>
 													<?php } ?>
 												</div>
 											</div>
@@ -113,7 +113,7 @@
 				<nav aria-label="...">
 					<ul class="pagination">
 						<li class="page-item">
-						<a class="page-link" href="/timelineSeguidores?pagina=1" tabindex="-1">Primeira</a>
+						<a class="page-link" href="/timelineSeguindo?pagina=1" tabindex="-1">Primeira</a>
 						</li>
 						<?php 
 							for($i = 1; $i <= $this->view->total_de_paginas; $i++) { ?>

@@ -163,7 +163,7 @@ class Usuario extends Model {
 	public function getSeguindoPaginar($limit, $offset) {
 		$query = "
 			select 
-				us.id, us.id_usuario, u.nome, (
+				u.id, u.nome, (
 					select 
 						count(*)
 					from
@@ -172,10 +172,9 @@ class Usuario extends Model {
 						us.id_usuario = :id_usuario and us.id_usuario_seguindo = u.id
 				) as seguindo_sn
 			from 
-				usuarios_seguidores as us
-				left join usuarios as u on (us.id_usuario = u.id)
-			where 
-				us.id_usuario_seguindo = :id_usuario
+				usuarios as u
+			where  
+				u.id != :id_usuario
 			limit
 				$limit
 			offset 
