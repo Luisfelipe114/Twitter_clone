@@ -204,6 +204,20 @@ class AppController extends Action {
 		$tweet->remover();
 		header('location: /timeline');
 	}
+
+	public function editarNome() {
+		$this->validaAutenticacao();
+		$usuario = Container::getModel('usuario');
+		$usuario->__set('id', $_SESSION['id']);
+		$usuario->__set('nome', $_POST['nome']);
+		$validade = $usuario->editarNome();
+		if($validade == true) {
+			header('location: /timeline?edicao=sucesso');
+		}
+		if($validade == false) {
+			header('location: /timeline?edicao=erro');
+		}
+	}
 }
 
 ?>

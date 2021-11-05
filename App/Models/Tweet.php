@@ -106,4 +106,5 @@ class Tweet extends Model {
 		$stmt->execute();
 		return true;
 	}
+
 }

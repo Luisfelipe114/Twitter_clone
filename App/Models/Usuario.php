@@ -280,6 +280,23 @@ class Usuario extends Model {
 
 		return $stmt->fetch(\PDO::FETCH_ASSOC);
 	}
+
+	public function editarNome() {
+		$valido = true;
+
+		if(strlen($this->__get('nome')) < 3) {
+			$valido = false;
+			return $valido;
+		} else {
+			$query = "update usuarios set nome = :nome where id = :id";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':id', $this->__get('id'));
+			$stmt->bindValue(':nome', $this->__get('nome'));
+			$stmt->execute();
+			return $valido;
+		}
+	}
+
 }
 
 ?>

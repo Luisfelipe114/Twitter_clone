@@ -80,6 +80,12 @@ class Route extends Bootstrap {
 			'action' => 'removerTweet'
 		);
 
+		$routes['editar_nome'] = array(
+			'route' => '/editar_nome',
+			'controller' => 'AppController',
+			'action' => 'editarNome'
+		);
+
 		$this->setRoutes($routes);
 	}
 
